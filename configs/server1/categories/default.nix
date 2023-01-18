@@ -1,0 +1,3 @@
+{
+  chatting = import ./chatting.nix;
+}
