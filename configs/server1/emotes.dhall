@@ -1,10 +1,6 @@
 let types = ../typings.dhall
 
-in    [ { mapKey = "kekw"
-        , mapValue = { path = "media/emotes/kekw.jpg", animated = False }
-        }
-      , { mapKey = "lul"
-        , mapValue = { path = "media/emotes/lul.jpg", animated = False }
-        }
+in    [ { name = "kekw", path = "media/emotes/kekw.jpg", animated = False }
+      , { name = "lul", path = "media/emotes/lul.png", animated = False }
       ]
     : List types.Emote

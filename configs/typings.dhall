@@ -1,34 +1,26 @@
-let Channel
-    : Type
-    = { name : Text
-      , description : Optional Text
-      , position : Optional Natural
-      , permissions : Optional Natural
-      }
+{- Basically types defined here are still TODO and should be moved
+to their own file for more clarity -}
+let Channel = ./types/channel.dhall
 
 let Category
     : Type
-    = { mapKey : Text
-      , mapValue :
-          { position : Optional Natural
-          , permissions : Optional Natural
-          , channels : List Channel
-          }
+    = { name : Text
+      , position : Optional Natural
+      , permissions : Optional Natural
+      , channels : List Channel.Type
       }
 
 let Role
     : Type
-    = { mapKey : Text
-      , mapValue :
-          { color : Text
-          , permissions : Optional Natural
-          , position : Optional Natural
-          }
+    = { name : Text
+      , color : Text
+      , permissions : Optional Natural
+      , position : Optional Natural
       }
 
 let Emote
     : Type
-    = { mapKey : Text, mapValue : { path : Text, animated : Bool } }
+    = { name : Text, path : Text, animated : Bool }
 
 let Sticker
     : Type
@@ -44,7 +36,7 @@ let Server
       , icon : Optional Text
       , banner : Optional Text
       , categories : List Category
-      , extraChannels : List Channel
+      , extraChannels : List Channel.Type
       , emotes : List Emote
       , roles : List Role
       , stickers : List Sticker
