@@ -14,3 +14,6 @@ Or if that doesn't work, there's also a docker-compose file so you could also ju
 ```bash
 docker compose up --build
 ```
+
+# Developing
+The Python project

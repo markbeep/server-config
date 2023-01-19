@@ -16,19 +16,31 @@ let Category
 
 let Role
     : Type
-    = { name : Text, color : Text, permissions : Optional Natural }
+    = { mapKey : Text
+      , mapValue :
+          { color : Text
+          , permissions : Optional Natural
+          , position : Optional Natural
+          }
+      }
 
 let Emote
     : Type
-    = { name : Text, path : Text }
+    = { mapKey : Text, mapValue : { path : Text, animated : Bool } }
 
 let Sticker
     : Type
-    = { name : Text, description : Optional Text, emote : Text, path : Text }
+    = { name : Text
+      , description : Optional Text
+      , relatedEmoji : Text
+      , path : Text
+      }
 
 let Server
     : Type
     = { name : Text
+      , icon : Optional Text
+      , banner : Optional Text
       , categories : List Category
       , extraChannels : List Channel
       , emotes : List Emote
