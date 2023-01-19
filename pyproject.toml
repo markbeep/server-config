@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "server-config"
+version = "0.1.0"
+description = ""
+authors = ["Mark <mrkswrn@gmail.com>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.10"
+dhall = "^0.1.14"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.15.10"
+black = "^22.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
