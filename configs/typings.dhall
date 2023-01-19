@@ -8,10 +8,12 @@ let Channel
 
 let Category
     : Type
-    = { name : Text
-      , position : Optional Natural
-      , permissions : Optional Natural
-      , channels : List Channel
+    = { mapKey : Text
+      , mapValue :
+          { position : Optional Natural
+          , permissions : Optional Natural
+          , channels : List Channel
+          }
       }
 
 let Role

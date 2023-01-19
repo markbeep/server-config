@@ -20,7 +20,6 @@ def validate_server(server: dict) -> Tuple[bool, str]:
         if not valid:
             return False, error
     
-    
     return True, None
 
 
@@ -29,15 +28,18 @@ def validate_channel(channel: dict) -> Tuple[bool, str]:
     return True, None
 
 
-def main():
-    with open("configs/servers.dhall", "r") as f:
+def validate(fp: str):
+    with open(fp, "r") as f:
         config = dhall.load(f)
-    print(config)
-    
     for server in config:
         valid, error = validate_server(server)
         if not valid:
             print(f"Server config invalid: {server['name']} | {error}")
+    
+
+def main():
+    validate("configs/servers.dhall")
+    
 
 if __name__ == "__main__":
     main()

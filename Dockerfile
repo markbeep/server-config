@@ -1,8 +1,13 @@
-FROM nixos/nix:2.13.1
+FROM python:3.11-alpine3.17
 
 WORKDIR /app
 
-# creates the file, copies it over and renames it
-COPY default.nix .
+RUN apk add --no-cache poetry
+COPY poetry.lock .
+COPY pyproject.toml .
+# doesn't fully work yet
+RUN poetry install --only main
+
+COPY validate.py .
 COPY configs configs
-CMD nix-build && cp `readlink result` build/config.json
+CMD poetry run python validate.py

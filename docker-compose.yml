@@ -1,7 +1,0 @@
-version: "3"
-
-services:
-  build-configs:
-    build: .
-    volumes:
-      - ./build:/app/build

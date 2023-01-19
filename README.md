@@ -1,19 +1,23 @@
-# Building the new JSON config from Nix
-If you have `nix-build` on your system, simply execute:
-```bash
-nix-build && cp `readlink result` build/config.json
-```
-
-Else if you don't have Nix, you can also build the config with
-Docker by either running it with this command:
-```bash
-docker run -v $PWD/build:/app/build --rm $(docker build -q .)
-```
-
-Or if that doesn't work, there's also a docker-compose file so you could also just run:
-```bash
-docker compose up --build
-```
-
 # Developing
-The Python project
+The project with the validate script is built using [Poetry](https://python-poetry.org/).
+
+This allows for correctly versioned and reproducible builds. Additional it allows for simple
+local developement if Poetry is installed locally.
+
+# Validating Paths
+Dhall already makes sure that the config follows the correct type structure.
+It can not validate external features like image paths though. For this
+reason the `validate.py` script should **always** be ran before pushing to
+make sure all linked emotes and images exist and are of the correct path.
+
+To run `validate.py` locally you can simply run it using Poetry:
+```bash
+poetry install
+poetry run python validate.py
+```
+
+Else if you don't have Poetry, you can also run the validate script
+with Docker.
+```bash
+docker run --rm $(docker build -q .)
+```

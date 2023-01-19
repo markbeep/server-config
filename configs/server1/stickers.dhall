@@ -1,9 +1,9 @@
 let types = ../typings.dhall
 
-in    [ { name = "cat hug"
-        , path = "media/cathug.png"
-        , relatedEmoji = ":grinning:"
-        , description = Some "Cat hugging"
+in    [ { name = "dead"
+        , path = "media/stickers/dead.png"
+        , relatedEmoji = ":skull:"
+        , description = Some "Skull"
         }
       ]
     : List types.Sticker
