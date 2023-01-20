@@ -19,7 +19,9 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
-      - name: Install
-        run: poetry install --only main
+      - name: Install Dependencies
+        run: python -m venv .venv
+        run: poetry export -f requirements.txt -o requirements.txt
+        run: .venv/bin/pip install -r requirements.txt
       - name: Validate config
-        run: poetry run python validate.py
+        run: .venv/bin/python validate.py

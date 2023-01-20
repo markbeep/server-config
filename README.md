@@ -10,6 +10,9 @@ It can not validate external features like image paths though. For this
 reason the `validate.py` script should **always** be ran before pushing to
 make sure all linked emotes and images exist and are of the correct path.
 
+**Note:** The dhall python package is currently not downloadable on Windows for reasons
+I'm not able to currently figure out.
+
 To run `validate.py` locally you can simply run it using Poetry:
 ```bash
 poetry install
