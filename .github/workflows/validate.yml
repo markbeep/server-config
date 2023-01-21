@@ -33,14 +33,19 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
             wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Linux.tar.bz2
+            tar --extract --file dhall-json*.tar.bz2
+            mkdir build
+            python -m venv .venv
+            poetry export -f requirements.txt -o requirements.txt
+            .venv/bin/pip install -r requirements.txt
           elif [ "$RUNNER_OS" == "macOS" ]; then
             wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-macOS.tar.bz2
+            tar --extract --file dhall-json*.tar.bz2
+            mkdir build
+            python -m venv .venv
+            poetry export -f requirements.txt -o requirements.txt
+            .venv/bin/pip install -r requirements.txt
           fi
-          tar --extract --file dhall-json*.tar.bz2
-          mkdir build
-          python -m venv .venv
-          poetry export -f requirements.txt -o requirements.txt
-          .venv/bin/pip install -r requirements.txt
       - name: Validate config Windows
         if: runner.os == 'Windows'
         run: |
