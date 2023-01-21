@@ -11,16 +11,21 @@ reason the `validate.py` script should **always** be ran before pushing to
 make sure all linked emotes and images exist and are of the correct path.
 
 
-To run `validate.py` locally you can simply run it using Poetry:
+To run `validate.py` locally you need to first install
+[dhall-json](https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html) and
+[Poetry](https://python-poetry.org/). Then you can generate the `config.json` and run the validator:
 ```bash
+mkdir -p build # create the build directory first
+dhall-to-json --file configs/servers.dhall --output build/config.json
+
 poetry install
 poetry run python validate.py
 ```
 
 Else if you don't have Poetry, you can also run the validate script
-with Docker.
+with Docker and optionally add the volume to get access to the `config.json`.
 ```bash
-docker run --rm $(docker build -q .)
+docker run -v $PWD/build:/app/build --rm $(docker build -q .)
 ```
 
 **Note:** You might notice there is actually a python Dhall library, but it doesn't get used here.
