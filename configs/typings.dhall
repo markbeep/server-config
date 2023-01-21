@@ -2,13 +2,7 @@
 to their own file for more clarity -}
 let Channel = ./types/channel.dhall
 
-let Category
-    : Type
-    = { name : Text
-      , position : Optional Natural
-      , permissions : Optional Natural
-      , channels : List Channel.Type
-      }
+let Category = ./types/category.dhall
 
 let Role
     : Type
@@ -35,7 +29,7 @@ let Server
     = { name : Text
       , icon : Optional Text
       , banner : Optional Text
-      , categories : List Category
+      , categories : List Category.Type
       , extraChannels : List Channel.Type
       , emotes : List Emote
       , roles : List Role
