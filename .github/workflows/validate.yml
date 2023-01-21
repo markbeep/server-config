@@ -20,7 +20,7 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Setup dhall Windows
-        if: runner.os == "Windows"
+        if: runner.os == 'Windows'
         run: |
           Invoke-WebRequest -Uri https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Windows.zip -OutFile dhall.zip
           unzip dhall.zip
