@@ -5,6 +5,10 @@ This includes checking if all the given icons actually exist and are pathed corr
 To make it really simple to figure out what exactly is wrong, errors are given in a simple
 arrow chain starting at the server name and leading to the error. Elements in square brackets
 indicate a field while other values indicate a named attribute.
+
+Current checks:
+- Checks image paths to ensure they exist
+- Checks for duplicate channel ids
 """
 
 from typing import Tuple
@@ -24,17 +28,25 @@ def validate_server(server: dict) -> Tuple[bool, str]:
     if banner and not os.path.isfile(banner):
         return False, f"[banner] > banner at '{banner}' does not exist"
 
-    valid, error = validate_multiple_channels(server["extraChannels"])
+    # get a set of all duplicate ids from all channels
+    ids = [x["id"] for x in server["extraChannels"]] + [
+        x["id"] for cat in server["categories"] for x in cat["channels"]
+    ]
+    duplicate_ids = set(filter(lambda x: ids.count(x) > 1, ids))
+
+    valid, error = validate_multiple_channels(server["extraChannels"], duplicate_ids)
     if not valid:
         return False, "[extraChannels] > " + error
 
-    # check for duplicate category names
-
-    # check for duplicate channel names inside category
+    # check for duplicate category ids and validate categories
+    cat_ids = set()
     for cat in server["categories"]:
-        valid, error = validate_category(cat)
+        valid, error = validate_category(cat, duplicate_ids)
         if not valid:
             return False, "[categories] > " + error
+        if (p := cat["id"]) in cat_ids:
+            return False, f"[categories] > duplicate category ID '{p}'"
+        cat_ids.add(p)
 
     ems = set()
     for emote in server["emotes"]:
@@ -55,8 +67,8 @@ def validate_server(server: dict) -> Tuple[bool, str]:
     return True, None
 
 
-def validate_category(category: dict) -> Tuple[bool, str]:
-    valid, error = validate_multiple_channels(category["channels"])
+def validate_category(category: dict, duplicate_ids: set[int]) -> Tuple[bool, str]:
+    valid, error = validate_multiple_channels(category["channels"], duplicate_ids)
     if not valid:
         return False, f"{category['name']} > [channels] > " + error
 
@@ -67,16 +79,16 @@ def validate_channel(channel: dict) -> Tuple[bool, str]:
     return True, None
 
 
-def validate_multiple_channels(channels: list) -> Tuple[bool, str]:
+def validate_multiple_channels(
+    channels: list, duplicate_ids: set[int]
+) -> Tuple[bool, str]:
     # detect duplicate channel names
-    chan_set = set()
     for chan in channels:
         valid, error = validate_channel(chan)
         if not valid:
             return False, error
-        if chan["name"] in chan_set:
-            return False, f"duplicate channel name '{chan['name']}'"
-        chan_set.add(chan["name"])
+        if (p := chan["id"]) in duplicate_ids:
+            return False, f"duplicate channel id '{p}'"
 
     return True, None
 
