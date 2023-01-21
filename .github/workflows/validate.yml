@@ -19,21 +19,24 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
-      - name: Setup dhall
+      - name: Setup dhall Linux
+        if: runner.os == "Linux"
         run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Linux.tar.bz2
-            tar --extract --file dhall-json-*-x86_64-Linux.tar.bz2
-            mkdir build
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            Invoke-WebRequest -Uri https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Windows.zip -OutFile dhall.zip
-            unzip dhall.zip
-            md build
-          elif [ "$RUNNER_OS" == "macOS" ]; then
-            wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-macOS.tar.bz2
-            tar --extract --file dhall-json-*-x86_64-macOS.tar.bz2
-            mkdir build
-          fi
+          wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Linux.tar.bz2
+          tar --extract --file dhall-json-*-x86_64-Linux.tar.bz2
+          mkdir build
+      - name: Setup dhall Windows
+        if: runner.os == "Windows"
+        run: |
+          Invoke-WebRequest -Uri https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Windows.zip -OutFile dhall.zip
+          unzip dhall.zip
+          md build
+      - name: Setup dhall Linux
+        if: runner.os == "macOS"
+        run: |
+          wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-macOS.tar.bz2
+          tar --extract --file dhall-json-*-x86_64-macOS.tar.bz2
+          mkdir build
       - name: Install Dependencies
         run: |
           python -m venv .venv
