@@ -29,6 +29,7 @@ docker run --rm $(docker build -q .)
 *Rough theory crafting of new problems and ideas that come up where I'm still indecisive
 about the exact implementation:*
 
+### IDs & Duplicate Names
 One of the major requisites is that a server-config has to be applicable on already
 existing channels, roles, etc. while also being able to create new objects if defined.
 
@@ -46,3 +47,9 @@ channel or role is renamed when changing the name in the config.
 
 Additionally to ensure consistency, the ID of an element should be updated to the Discord ID
 to ensure consistency even when the database is lost.
+
+### Modularity
+A cool addition would be if the whole program was modular. Meaning it would be fairly
+easy to add new features as quick mods. For example a mod that adds a cron-like action that sends
+messages in a specifc channel in a timed manner. For that to work well an optional `flag` attribute
+in each object would be necessary.
