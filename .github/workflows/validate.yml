@@ -20,8 +20,9 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install Dependencies
-        run: python -m venv .venv
-        run: poetry export -f requirements.txt -o requirements.txt
-        run: .venv/bin/pip install -r requirements.txt
+        run: |
+          python -m venv .venv
+          poetry export -f requirements.txt -o requirements.txt
+          .venv/bin/pip install -r requirements.txt
       - name: Validate config
         run: .venv/bin/python validate.py
