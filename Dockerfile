@@ -1,4 +1,4 @@
-FROM python:3.10-alpine3.17 as base
+FROM python:3.11-slim-bullseye as base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONFAULTHANDLER=1 \
@@ -9,17 +9,25 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-RUN apk add --no-cache gcc musl-dev libpq-dev
+#RUN apk add --no-cache gcc musl-dev libpq-dev wget
+RUN apt-get update && apt-get install -y wget bzip2
+# install dhall-json
+RUN wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.41.2/dhall-json-1.7.11-x86_64-Linux.tar.bz2
+RUN tar --extract --file dhall-json-*-x86_64-Linux.tar.bz2
+
 RUN pip install --no-cache "poetry==$POETRY_VERSION"
 RUN python -m venv /venv
 
-# dhall can't be installed for some reason, so this fails
 COPY pyproject.toml poetry.lock ./
 RUN poetry export -f requirements.txt | /venv/bin/pip install -r /dev/stdin
 
-
 FROM base as final
+
+RUN mkdir build -p
 
 COPY validate.py .
 COPY configs configs
-CMD /venv/bin/python validate.py
+COPY media media
+
+CMD /app/bin/dhall-to-json --file configs/servers.dhall --output build/config.json && \
+    /venv/bin/python validate.py

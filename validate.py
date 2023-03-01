@@ -13,7 +13,7 @@ Current checks:
 
 from typing import Tuple
 import os
-import dhall
+import json
 
 # TODO: make sure correct options are used at places with
 # limited amount of options. Might be able to implement in Dhall already
@@ -50,7 +50,7 @@ def validate_server(server: dict) -> Tuple[bool, str]:
 
     ems = set()
     for emote in server["emotes"]:
-        if not (os.path.isfile(fp := emote["path"])):
+        if not os.path.isfile(fp := emote["path"]):
             return False, f"[emotes] > emote at '{fp}' does not exist"
         if emote["name"] in ems:
             return False, f"[emotes] > duplicate emote name '{emote['name']}'"
@@ -58,7 +58,7 @@ def validate_server(server: dict) -> Tuple[bool, str]:
 
     stks = set()
     for sticker in server["stickers"]:
-        if not (os.path.isfile(fp := sticker["path"])):
+        if not os.path.isfile(fp := sticker["path"]):
             return False, f"[stickers] > sticker at '{fp}' does not exist"
         if sticker["name"] in stks:
             return False, f"[stickers] > duplicate sticker name '{sticker['name']}'"
@@ -94,8 +94,11 @@ def validate_multiple_channels(
 
 
 def validate(fp: str):
-    with open(fp, "r", encoding="utf-8") as f:
-        config = dhall.load(f)
+    try:
+        with open(fp, "r", encoding="utf-8") as f:
+            config = json.load(f)
+    except FileNotFoundError as exc:
+        raise FileNotFoundError(f"'{fp}' was not found. Have you ran 'dhall-to-json'?") from exc
 
     errors = False
     for server in config:
@@ -111,7 +114,7 @@ def validate(fp: str):
 
 
 def main():
-    validate("configs/servers.dhall")
+    validate("build/config.json")
 
 
 if __name__ == "__main__":
