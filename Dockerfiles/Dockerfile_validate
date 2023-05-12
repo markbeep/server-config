@@ -18,7 +18,7 @@ RUN tar --extract --file dhall-json-*-x86_64-Linux.tar.bz2
 RUN pip install --no-cache "poetry==$POETRY_VERSION"
 RUN python -m venv /venv
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml core/poetry.lock ./
 RUN poetry export -f requirements.txt | /venv/bin/pip install -r /dev/stdin
 
 FROM base as final
