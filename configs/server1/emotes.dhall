@@ -1,6 +1,6 @@
 let types = ../typings.dhall
 
-in    [ { name = "kekw", path = "media/emotes/kekw.jpg", animated = False }
-      , { name = "lul", path = "media/emotes/lul.png", animated = False }
+in    [ types.Emote::{ name = "kekw", path = "media/emotes/kekw.jpg", animated = False }
+      , types.Emote::{ name = "lul", path = "media/emotes/lul.png", animated = False }
       ]
-    : List types.Emote
+    : List types.Emote.Type

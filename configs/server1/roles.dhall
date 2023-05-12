@@ -1,19 +1,19 @@
 let types = ../typings.dhall
 
-in    [ { name = "Admin"
+in    [ types.Role::{ name = "Admin"
         , color = "#121212"
         , permissions = None Natural
         , position = Some 0
         }
-      , { name = "Bot"
+      , types.Role::{ name = "Bot"
         , color = "#121212"
         , permissions = None Natural
         , position = None Natural
         }
-      , { name = "Teaching Assistant"
+      , types.Role::{ name = "Teaching Assistant"
         , color = "#121212"
         , permissions = None Natural
         , position = None Natural
         }
       ]
-    : List types.Role
+    : List types.Role.Type

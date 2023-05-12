@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Dockerfile_bot
+    volumes:
+      - ./data:./data
+    env_file:
+      - .env

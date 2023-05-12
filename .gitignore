@@ -2,3 +2,5 @@ build
 result
 .venv
 .envrc
+__pycache__
+.env

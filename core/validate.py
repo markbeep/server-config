@@ -72,10 +72,12 @@ def validate_category(category: dict, duplicate_ids: set[int]) -> Tuple[bool, st
     if not valid:
         return False, f"{category['name']} > [channels] > " + error
 
+    # TODO
     return True, None
 
 
 def validate_channel(channel: dict) -> Tuple[bool, str]:
+    # TODO
     return True, None
 
 

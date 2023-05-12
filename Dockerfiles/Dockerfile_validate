@@ -25,7 +25,7 @@ FROM base as final
 
 RUN mkdir build -p
 
-COPY validate.py .
+COPY core/validate.py validate.py
 COPY configs configs
 COPY media media
 
