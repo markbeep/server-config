@@ -1,3 +1,12 @@
+# Declarative Discord Server Config
+Define server configuration from channels to roles to emotes in a declarative
+way using the Dhall functional config language. Then have the configuration file automatically
+be synced up with the server itself.
+
+This opens the door to having a clear overview of a Discord server. If the server config is in a
+public repo, this allows suggestions from members to be added via Pull Requests instead of
+them having to suggest changes to the staff team and the staff team then having to implement it.
+
 # Developing
 
 The project with the validate script is built using [Poetry](https://python-poetry.org/).

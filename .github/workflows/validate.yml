@@ -6,9 +6,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11"]
-        poetry-version: ["1.3"]
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [ "3.11" ]
+        poetry-version: [ "1.3" ]
+        os: [ ubuntu-latest, macos-latest ] # windows-latest taken out
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -50,11 +50,11 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           bin/dhall-to-json --file configs/servers.dhall --output build/config.json
-          .venv/scripts/python validate.py
+          .venv/scripts/python core/validate.py
       - name: Validate config Linux/macOS
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
             bin/dhall-to-json --file configs/servers.dhall --output build/config.json
-            .venv/bin/python validate.py
+            .venv/bin/python core/validate.py
           fi

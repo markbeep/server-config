@@ -9,6 +9,9 @@ packages = [{include = "./core"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 python-dotenv = "^1.0.0"
+discord-py = "^2.2.3"
+peewee = "^3.16.2"
+cogwatch = "^3.3.1"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.15.10"

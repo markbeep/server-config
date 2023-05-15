@@ -5,6 +5,7 @@ mkShell {
     dhall-lsp-server
     dhall-json
     dhall
-    python310
+    python311
+    poetry
   ];
 }
