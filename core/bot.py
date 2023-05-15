@@ -20,7 +20,7 @@ class Bot(commands.Bot):
         print(f"Bot started up: {self.user.name} ({self.user.id})")
 
     async def setup_hook(self):
-        await self.load_extension("core.lib.handler")
+        await self.load_extension("core.loop")
 
 
 def main():
